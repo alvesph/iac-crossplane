@@ -1,0 +1,13 @@
+{{- if .Values.providers.providerConfig.enabled -}}
+apiVersion: aws.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: {{ .Values.providers.providerConfig.name }}
+spec: 
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: {{ .Values.providers.providerConfig.secretRef.namespace }}
+      name: {{ .Values.providers.providerConfig.secretRef.name }}
+      key: creds
+{{- end}}

@@ -1,0 +1,15 @@
+{{- if .Values.s3.bucket.enabled -}}
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: Bucket
+metadata: 
+  name: {{ .Values.s3.bucket.name }}
+spec:
+  forProvider:
+    region: us-east-1
+    {{- with .Values.s3.bucket.forProvider.tags }}
+    tags:
+      {{- toYaml . | nindent 6 }}
+    {{- end}}
+  providerConfigRef:
+    name: {{ .Values.s3.bucket.providerConfigRef.name }}
+{{- end}}

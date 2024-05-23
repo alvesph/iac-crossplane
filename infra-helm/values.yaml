@@ -1,0 +1,61 @@
+providers:
+  providerConfig:
+    enabled: false
+    name: default
+    secretRef:
+      namespace: crossplane-system
+      name: aws-secret
+
+  providerAwsS3:
+    enabled: false
+
+  providerAwsEks:
+    enabled: false
+
+s3:
+  bucket:
+    enabled: false
+    name: crossplane-bucket
+    forProvider:
+      region: us-east-1
+      tags:
+        environment: dev
+        project: teste
+    providerConfigRef:
+      name: default
+
+eks:
+  nodegroup:
+    enabled: true
+    name: applications
+    forProvider:
+      clusterName: name-eks
+      nodeRoleArn: arn:aws:iam::000000000000:role/name
+      region: us-east-1
+      capacityType: ON_DEMAND
+      instanceTypes: ["t3.medium"]
+      diskSize: 30
+      labels:
+        role: general
+      scalingConfig:
+        desiredSize: 1
+        maxSize: 1
+        minSize: 1
+      subnetIds:
+        - subnet-00000000000000000
+        - subnet-11111111111111111
+        - subnet-22222222222222222
+      tags:
+        environment: dev
+        project: teste 
+    providerConfigRef:
+      name: default
+
+secrets:
+  enabled: false
+  name: aws-secret
+  data:
+    creds: |
+      [default]
+      aws_access_key_id = key
+      aws_secret_access_key = secret

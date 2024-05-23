@@ -1,0 +1,8 @@
+{{- if .Values.providers.providerAwsEks.enabled -}}
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-eks
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-eks:v1.4.0
+{{- end}}

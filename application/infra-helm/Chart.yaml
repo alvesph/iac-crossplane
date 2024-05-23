@@ -1,0 +1,5 @@
+# Chart.yaml
+apiVersion: v2
+name: infra-helm
+description: A Helm chart for infra-helm project
+version: 0.1.0

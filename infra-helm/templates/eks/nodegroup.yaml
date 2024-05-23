@@ -1,0 +1,32 @@
+{{- if .Values.eks.nodegroup.enabled -}}
+apiVersion: eks.aws.upbound.io/v1beta1
+kind: NodeGroup
+metadata:
+  name: {{ .Values.eks.nodegroup.name }}
+spec:
+  forProvider:
+    clusterName: {{ .Values.eks.nodegroup.forProvider.clusterName }}
+    nodeRoleArn: {{ .Values.eks.nodegroup.forProvider.nodeRoleArn }}
+    region: {{ .Values.eks.nodegroup.forProvider.region }}
+    capacityType: {{ .Values.eks.nodegroup.forProvider.capacityType }}
+    instanceTypes: {{ .Values.eks.nodegroup.forProvider.instanceTypes }}
+    diskSize: {{ .Values.eks.nodegroup.forProvider.diskSize }}
+    {{- with .Values.eks.nodegroup.forProvider.labels }}
+    labels:
+      {{- toYaml . | nindent 6 }}
+    {{- end}}
+    scalingConfig:
+      - desiredSize: {{ .Values.eks.nodegroup.forProvider.scalingConfig.desiredSize }}
+        maxSize: {{ .Values.eks.nodegroup.forProvider.scalingConfig.maxSize }}
+        minSize: {{ .Values.eks.nodegroup.forProvider.scalingConfig.minSize }}
+    {{- with .Values.eks.nodegroup.forProvider.subnetIds }}
+    subnetIds:
+      {{- toYaml . | nindent 6 }}
+    {{- end}}
+    {{- with .Values.eks.nodegroup.forProvider.tags }}
+    tags:
+      {{- toYaml . | nindent 6 }}
+    {{- end}}
+  providerConfigRef:
+    name: {{ .Values.eks.nodegroup.providerConfigRef.name }}
+{{- end}}

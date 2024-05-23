@@ -1,0 +1,17 @@
+# values.yaml
+project: services
+source:
+  repoURL: 'repository'
+  path: projeto/charts/projeto
+  targetRevision: main
+  helm:
+    parameters:
+      - name: image
+        value: image
+destination:
+  server: 'cluster'
+  namespace: crossplane-system
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
